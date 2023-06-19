@@ -39,12 +39,12 @@ public class MyServer
         server.setExecutor(null);
         server.start();
 
-        if(!startServer())
+        if(!startServer()) //ci crea il server
         {
             return;
         }
 
-        while(true)
+        while(true) //il server è sempre pronto a prendere richieste dai client
         {
             Socket clientSocket;
             try {
@@ -59,4 +59,5 @@ public class MyServer
         }
     }
 }
+
 

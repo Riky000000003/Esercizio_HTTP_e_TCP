@@ -24,17 +24,15 @@ public class MyHandler implements HttpHandler
         InputStream is = exchange.getRequestBody(); //si riempe nel post
         URI uri = exchange.getRequestURI(); //si riempe nel get
 
-        System.out.println(uri);
-
         String params="";
         String method = exchange.getRequestMethod();
         if(method.equals("POST"))
         {
-            params = read(is);  //curl "http://127.0.0.1:8000/" -d ?gimmeanswer=please&user=john
+            params = read(is);
         }
         else if(method.equals("GET"))
         {
-            params = uri.getQuery();  //curl "http://127.0.0.1:8000/?gimmeanswer=please&user=john"
+            params = uri.getQuery();
         }
         System.out.println(method + ":" +params);
         Gson g = new Gson();
@@ -82,7 +80,7 @@ public class MyHandler implements HttpHandler
                 }
                 else
                 {
-                    return new Answer(false, "User not ").asJSON();
+                    return new Answer(false, "User not Logged").asJSON();
                 }
             }
         }
@@ -116,13 +114,27 @@ public class MyHandler implements HttpHandler
             if(cmd.cmd.equals("list")){
                 if(userManager.verifyAction())
                 {
-                    if(cmd.param1.equals("json") && cmd.param2.equals(store.getCodeHash()))
+                    if(cmd.param1.equals("json"))
                     {
-                        return store.getListAsJSON();
+                        if(cmd.param2.equals(store.getCodeHash()))
+                        {
+                            return store.getListAsJSON();
+                        }
+                        else
+                        {
+                            return new Answer(false, "token error").asJSON();
+                        }
                     }
-                    else if(cmd.param1.equals("html") && cmd.param2.equals(store.getCodeHash()))
+                    else if(cmd.param1.equals("html"))
                     {
-                        return generateHtml();
+                        if(cmd.param2.equals(store.getCodeHash()))
+                        {
+                            return generateHtml();
+                        }
+                        else
+                        {
+                            return new Answer(false, "token error").asJSON();
+                        }
                     }
                 }
                 else
