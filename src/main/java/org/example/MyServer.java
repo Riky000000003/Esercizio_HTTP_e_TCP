@@ -53,7 +53,7 @@ public class MyServer
                 throw new RuntimeException(e);
             }
 
-            ClientHandler clientHandler = new ClientHandler(clientSocket);
+            ClientHandler clientHandler = new ClientHandler(clientSocket); //implementare il multiThread con il runnable
             Thread thread = new Thread(clientHandler);
             thread.start();
         }

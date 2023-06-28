@@ -77,6 +77,13 @@ public class ClientHandler implements  Runnable{
             out.println("Working on...");
 
             Command cmd = null;
+
+            try {
+                cmd = g.fromJson(s, Command.class);
+            } catch (Exception e) {
+                ////
+            }
+
             if(cmd!=null)
             {
                 cmd = g.fromJson(s,Command.class);
